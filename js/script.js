@@ -1,35 +1,21 @@
-function addHamburgerMenuEventListener(){
-    addEventListener("resize",resetNavigation);
-    document.getElementById("hamburger-menu").addEventListener("click",toggleNavigation);
-}
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("hamburger-menu");
+    const mainNavigation = document.getElementById("main-navigation");
+    const desktopBreakpoint = 1000;
 
-function toggleNavigation(){
-    const mainNavigation=document.getElementById("main-navigation");
-    const mainNavigationCssDisplay=window.getComputedStyle(mainNavigation).display;
-    if(mainNavigationCssDisplay==="none"){
-        mainNavigation.style.display="block";
-    }
-    else{
-        mainNavigation.style.display="none";
-    }
-}
-
-function resetNavigation(){
-    const minWidth=1250;
-    const mainNavigation=document.getElementById("main-navigation");
-    const mainNavigationCssDisplay=window.getComputedStyle(mainNavigation).display;
-    //smaller screen
-    if(window.innerWidth<minWidth){
-        if(mainNavigationCssDisplay!=="none"){
-            mainNavigation.style.display="none";
+    function updateNavigation() {
+        if (window.innerWidth >= desktopBreakpoint) {
+            mainNavigation.classList.remove("open");
+            toggleButton.setAttribute("aria-expanded", "false");
         }
     }
-    //larger screen
-    else{
-        if(mainNavigationCssDisplay==="none"){
-            mainNavigation.style.display="block";
-        }
-    }
-}
 
-addHamburgerMenuEventListener();
+    function toggleNavigation() {
+        const isOpen = mainNavigation.classList.toggle("open");
+        toggleButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+
+    toggleButton.addEventListener("click", toggleNavigation);
+    window.addEventListener("resize", updateNavigation);
+    updateNavigation();
+});
