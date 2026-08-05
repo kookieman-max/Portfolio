@@ -18,4 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleButton.addEventListener("click", toggleNavigation);
     window.addEventListener("resize", updateNavigation);
     updateNavigation();
+
+    // Back to top button
+    const backToTop = document.getElementById("back-to-top");
+    function updateBackToTop() {
+        if (!backToTop) return;
+        if (window.scrollY > 300) backToTop.classList.remove("hidden");
+        else backToTop.classList.add("hidden");
+    }
+
+    if (backToTop) {
+        backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+        window.addEventListener("scroll", updateBackToTop);
+        updateBackToTop();
+    }
 });
